@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甲元教授βグルカン研究とLPS解説SPA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-active { background-color: #0369a1; color: white; }
+        .tab-inactive { background-color: #e2e8f0; color: #334155; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 320px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        h2 { font-size: 1.75rem; font-weight: 600; margin-bottom: 1rem; color: #0c4a6e; }
+        h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: #075985; }
+        h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #075985; }
+        .custom-list li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; }
+        .custom-list li::before { content: "🧪"; position: absolute; left: 0; color: #0ea5e9; }
+        .tag { display: inline-block; background-color: #e0f2fe; color: #0ea5e9; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; margin-right: 0.5rem; margin-bottom: 0.5rem;}
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-sky-700 text-white shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <h1 class="text-3xl font-bold text-center">甲元一也教授のβグルカン研究とLPSの科学</h1>
+        </div>
+        <nav class="bg-sky-600">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center space-x-2 sm:space-x-4 py-2" id="navTabs">
+                <button data-tab="home" class="tab-active px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium text-sm sm:text-base hover:bg-sky-500 transition-colors">ホーム</button>
+                <button data-tab="koumoto-blab" class="tab-inactive px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium text-sm sm:text-base hover:bg-sky-500 transition-colors">甲元教授とB-Lab</button>
+                <button data-tab="beta-glucan" class="tab-inactive px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium text-sm sm:text-base hover:bg-sky-500 transition-colors">βグルカン技術</button>
+                <button data-tab="lps" class="tab-inactive px-3 py-2 sm:px-4 sm:py-2 rounded-md font-medium text-sm sm:text-base hover:bg-sky-500 transition-colors">LPS解説</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <section id="home" class="content-section active">
+            <h2 class="border-b-2 border-sky-500 pb-2 mb-6">ようこそ！生命科学の探求へ</h2>
+            <p class="mb-4 text-lg">
+                このインタラクティブ・レポートへようこそ。本アプリケーションは、甲南大学の甲元一也教授と株式会社B-Labによる革新的なβグルカン研究、そして免疫システムに深く関わるリポポリサッカライド（LPS）に関する包括的な情報を提供します。
+            </p>
+            <p class="mb-4">
+                私たちの健康や科学技術の進歩は、このような基礎研究と応用開発の絶え間ない努力によって支えられています。ここでは、甲元教授の先駆的な業績、B-Labが開発したβグルカンのナノ化技術、そしてLPSという複雑な分子の多面的な役割について、わかりやすく解説します。
+            </p>
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <h3 class="text-sky-700 mb-3">甲元一也教授とB-Lab</h3>
+                    <p class="text-sm mb-4">甲元教授の輝かしい経歴と、彼が設立した株式会社B-Labの挑戦、そしてその中核技術に迫ります。</p>
+                    <button onclick="showTab('koumoto-blab')" class="bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-sky-700 transition-colors text-sm">詳しく見る</button>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <h3 class="text-sky-700 mb-3">革新的βグルカン技術</h3>
+                    <p class="text-sm mb-4">βグルカンの可能性を最大限に引き出す、B-Lab独自のナノ化技術とその応用例を紹介します。</p>
+                    <button onclick="showTab('beta-glucan')" class="bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-sky-700 transition-colors text-sm">詳しく見る</button>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <h3 class="text-sky-700 mb-3">リポポリサッカライド(LPS)</h3>
+                    <p class="text-sm mb-4">免疫応答の鍵を握るLPS。その構造、機能、疾患との関連、最新の研究動向を解説します。</p>
+                    <button onclick="showTab('lps')" class="bg-sky-600 text-white px-4 py-2 rounded-md hover:bg-sky-700 transition-colors text-sm">詳しく見る</button>
+                </div>
+            </div>
+             <p class="mt-8 text-sm text-slate-600">
+                上のナビゲーションタブを使用して、各セクションの詳細をご覧ください。
+            </p>
+        </section>
+
+        <section id="koumoto-blab" class="content-section">
+            <h2 class="border-b-2 border-sky-500 pb-2 mb-6">甲元一也教授と株式会社B-Labの軌跡</h2>
+            <p class="mb-6">このセクションでは、甲南大学の甲元一也教授の経歴、専門分野、そして彼が設立した株式会社B-Labの革新的な取り組みについて詳しく解説します。学術的な探求と社会実装への情熱が交差する物語です。</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3>甲元一也教授</h3>
+                <p class="mb-4">甲元一也教授は、甲南大学フロンティアサイエンス学部生命化学科の教授であり、株式会社B-Labの代表取締役社長も務める、学術研究と実業の世界で活躍する研究者です。専門分野は食品科学、生物有機化学、バイオ機能応用など多岐にわたります。</p>
+                
+                <h4 class="mt-4">主な経歴と業績</h4>
+                <ul class="list-disc list-inside space-y-2 text-sm custom-list">
+                    <li>九州大学工学部応用物質科学科 早期卒業</li>
+                    <li>九州大学大学院工学研究科にて博士（工学）取得</li>
+                    <li>科学技術振興事業団 日蘭国際共同研究分子転写プロジェクト 研究員</li>
+                    <li>北九州市立大学国際環境工学部 日本学術振興会特別研究員（PD）</li>
+                    <li>2004年 甲南大学 先端生命工学研究所 講師</li>
+                    <li>2009年 甲南大学 フロンティアサイエンス学部生命化学科 准教授</li>
+                    <li>2018年 甲南大学 フロンティアサイエンス学部生命化学科 教授 (現職)</li>
+                    <li>2023年1月 株式会社B-Lab設立、代表取締役社長 就任</li>
+                    <li>バイオテックグランプリ2021 最優秀賞・AQI賞 ダブル受賞</li>
+                </ul>
+                <p class="mt-4 text-sm">甲元教授は、基礎研究からその成果を社会に還元することに情熱を注ぎ、特に生物由来分子の機能解明と応用開発において顕著な業績を上げています。</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3>株式会社B-Lab</h3>
+                <p class="mb-4">株式会社B-Labは、2023年1月に甲元一也教授によって設立された甲南大学発のベンチャー企業です。「生物模倣化学（バイオミメティック・ケミストリー）」を基盤とし、生物の持つ優れた機能や構造から着想を得たものづくりを目指しています。</p>
+                
+                <h4 class="mt-4">主要技術</h4>
+                <div class="space-y-3 text-sm">
+                    <p><span class="tag">高水溶性β-1,3-1,6-グルカン</span>従来のβグルカンの課題であった水への溶解性を、独自のナノ化技術により150倍に高めることに成功。食品、化粧品、医薬品分野での応用が期待されています。</p>
+                    <p><span class="tag">機能性ベタイン水溶液</span>極限環境生物由来の新規機能性ベタインを発見。高い水和能力を持ち、臨床診断薬の感度向上や難水溶性物質の溶解、有機溶媒の代替など、多様な応用が可能です。</p>
+                </div>
+
+                <h4 class="mt-6">提携と将来性</h4>
+                <p class="text-sm mb-2">B-Labは、その革新的な技術を基に、様々な企業との連携を模索しています。特に、バイオテクノロジー関連のイベントで数々の賞を受賞しており、食品・飲料、化粧品・パーソナルケア、製薬・栄養補助食品、医療診断、環境分野など、広範な産業での貢献が期待されています。</p>
+                <p class="text-sm">具体的な提携先に関する情報は限定的ですが、R3i Venturesとのメタバース拠点設立や、近畿バイオインダストリー振興会議のデータベース掲載など、認知度向上とネットワーク構築に積極的に取り組んでいます。</p>
+            </div>
+        </section>
+
+        <section id="beta-glucan" class="content-section">
+            <h2 class="border-b-2 border-sky-500 pb-2 mb-6">革新的βグルカン技術</h2>
+            <p class="mb-6">このセクションでは、健康効果が期待されるβグルカンについて、その基本的な特性から、甲元教授と株式会社B-Labが開発した画期的な高水溶性化技術、関連する特許、そして具体的な研究事例までを深く掘り下げて解説します。</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3>βグルカンとは？</h3>
+                <p class="mb-3">βグルカンは、キノコ類、酵母、海藻類、穀物（大麦やオーツ麦など）に広く存在する多糖類の一種です。免疫機能の調整、コレステロール値の低下、血糖値上昇の抑制など、様々な健康効果が報告されており、機能性食品やサプリメントの成分として注目されています。</p>
+                <p class="text-sm text-slate-600">しかし、天然のβグルカンの多くは分子量が大きく、水に溶けにくいという性質があります。この溶解性の低さが、体内への吸収効率や製品への応用範囲を限定する一因となっていました。</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3>B-Labのナノ化技術：溶解性のブレークスルー</h3>
+                <p class="mb-3">甲元教授が率いる株式会社B-Labは、このβグルカンの溶解性問題を解決するため、独自のナノ化技術を開発しました。この特許技術により、βグルカンはナノメートルサイズの粒子へと微細化されます。</p>
+                <ul class="list-disc list-inside space-y-2 text-sm mb-4 custom-list">
+                    <li><span class="font-semibold">驚異的な溶解性向上:</span> 未処理のβグルカンと比較して、水への溶解度が約150倍に向上。</li>
+                    <li><span class="font-semibold">安全性への配慮:</span> ナノ化プロセスには、食品添加物としても一般的に使用される酸やアルカリが用いられています。</li>
+                    <li><span class="font-semibold">多機能性ナノ粒子:</span> ナノ化されたβグルカンは、ポリフェノールなどの他の機能性成分を内部に包み込む（カプセル化する）ことが可能です。これにより、包接された成分の水溶性も同時に向上させることができます。</li>
+                </ul>
+                <div class="text-center my-4">
+                     <p class="text-2xl font-bold text-sky-600">水溶性 <span id="solubilityFactor" class="text-amber-500">150</span> 倍！</p>
+                     <p class="text-xs text-slate-500">(従来のβグルカンとの比較)</p>
+                </div>
+                <p class="text-sm">この技術は、βグルカンの体内吸収率を高め、機能性食品、化粧品、医薬品など、より広範な分野での利用を可能にします。特に欧米市場では免疫健康への関心が高く、B-Labの技術は大きな市場潜在力を持つと期待されています（市場規模予測：数年後700億円）。</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3>主要特許</h3>
+                    <p class="mb-3 text-sm">甲元教授は、高水溶性β-1,3-1,6グルカン粉末に関する重要な特許を取得しています。</p>
+                    <p class="font-semibold text-sky-700 mb-1">特許名:</p>
+                    <p class="text-xs mb-3">β－１，３－１，６－グルカン粉末、グルカン含有組成物、β－１，３－１，６－グルカン粉末の製造方法、包接複合体、包接複合体の製造方法およびゲスト分子の回収方法</p>
+                    <p class="font-semibold text-sky-700 mb-1">特許番号 (日本):</p>
+                    <p class="text-xs mb-3">特許第7298846号 (国際出願あり: US11384159)</p>
+                    
+                    <h4 class="mt-4 text-sm font-semibold">特許の主な特徴:</h4>
+                    <table class="min-w-full text-xs mt-2 border border-slate-200">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="px-2 py-1 border-b text-left">特徴</th>
+                                <th class="px-2 py-1 border-b text-left">仕様</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-2 py-1 border-b">25℃における溶解度</td>
+                                <td class="px-2 py-1 border-b">1.0～20.0質量％</td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-1 border-b">ピーク粒径 (動的光散乱法)</td>
+                                <td class="px-2 py-1 border-b">5～15 nm</td>
+                            </tr>
+                             <tr>
+                                <td class="px-2 py-1">意義</td>
+                                <td class="px-2 py-1">高水溶性とナノスケール粒子化を実現し、広範な応用を保護</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3>研究事例：シコニン包接による抗菌効果</h3>
+                    <p class="mb-3 text-sm">甲元教授の研究室では、βグルカンの応用として、抗菌作用を持つ天然色素「シコニン」の溶解性を高める研究が行われました。</p>
+                    <p class="font-semibold text-sky-700 mb-1">論文タイトル (要約):</p>
+                    <p class="text-xs mb-3">β-1,3-1,6グルカンに封入されたシコニン分散液の口腔細菌（ミュータンス菌等）に対する阻害効果</p>
+                    <h4 class="mt-4 text-sm font-semibold">研究のポイント:</h4>
+                     <ul class="list-disc list-inside space-y-1 text-xs mt-2 custom-list">
+                        <li>シコニンは抗菌作用を持つが水に溶けにくい。</li>
+                        <li>β-1,3-1,6グルカンでシコニンを包接し、水分散性の高い「シコニン分散液」を調製。</li>
+                        <li>この分散液は、虫歯原因菌であるミュータンス菌の増殖とバイオフィルム形成を顕著に抑制。</li>
+                        <li>臨床試験では、シコニン分散液配合歯磨き粉が口腔内ミュータンス菌数を減少。</li>
+                    </ul>
+                    <p class="mt-3 text-xs">この研究は、βグルカンが難水溶性物質のキャリアとして機能し、その効果を高める可能性を示しています。</p>
+                    <div class="chart-container mt-4 h-48 sm:h-64">
+                        <canvas id="shikoninChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lps" class="content-section">
+            <h2 class="border-b-2 border-sky-500 pb-2 mb-6">リポポリサッカライド（LPS）解説</h2>
+            <p class="mb-6">このセクションでは、グラム陰性細菌の細胞壁外膜の主要構成成分であり、私たちの免疫システムと深く関わるリポポリサッカライド（LPS）、別名エンドトキシンについて、その基本構造から機能、疾患との関連性、最新の研究動向までを包括的に解説します。</p>
+
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                <h3>1. LPSとは？ ― 基本を理解する</h3>
+                <p class="mb-3 text-sm">LPSは、グラム陰性細菌の外膜に存在する複雑な糖脂質分子です。細菌の構造維持に不可欠であると同時に、宿主（ヒトなど）の免疫系に対して強力な刺激物質（エンドトキシン）として作用します。</p>
+                <h4 class="font-semibold text-sky-600">LPSの三層構造：</h4>
+                <div class="grid md:grid-cols-3 gap-4 mt-2 text-xs">
+                    <div class="border border-slate-200 p-3 rounded-md bg-sky-50">
+                        <p class="font-bold text-sky-700">リピドA (Lipid A)</p>
+                        <p>LPSの脂質部分で、疎水性。エンドトキシン活性（免疫刺激活性）の中心。細菌種により構造が異なり、活性の強さに影響します。</p>
+                    </div>
+                    <div class="border border-slate-200 p-3 rounded-md bg-teal-50">
+                        <p class="font-bold text-teal-700">コアオリゴ糖 (Core Oligosaccharide)</p>
+                        <p>リピドAとO抗原を繋ぐ糖鎖。外膜の完全性維持に重要。比較的構造が保存されています。</p>
+                    </div>
+                    <div class="border border-slate-200 p-3 rounded-md bg-indigo-50">
+                        <p class="font-bold text-indigo-700">O抗原 (O-Antigen)</p>
+                        <p>最も外側に位置する親水性の多糖鎖。細菌の血清型を決定。構造が非常に多様で、宿主の抗体認識の主要ターゲットです。</p>
+                    </div>
+                </div>
+                 <p class="mt-4 text-xs text-slate-500">この構造の多様性が、細菌の種類によって異なる免疫応答を引き起こす一因となります。</p>
+            </div>
+            
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                <h3>2. LPSの機能 ― 細菌の生存戦略と宿主への影響</h3>
+                <div class="grid md:grid-cols-2 gap-6 text-sm">
+                    <div>
+                        <h4 class="font-semibold text-sky-600">細菌における機能：</h4>
+                        <ul class="list-disc list-inside space-y-1 mt-2 custom-list">
+                            <li><span class="font-medium">外膜の構造維持:</span> 細菌細胞の形態と強度を保ちます。</li>
+                            <li><span class="font-medium">透過性バリア:</span> 有害物質（胆汁酸、抗生物質など）の侵入を防ぎます。</li>
+                            <li><span class="font-medium">接着と生存:</span> 宿主細胞への付着やバイオフィルム形成を助けます。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-sky-600">宿主免疫システムへの作用：</h4>
+                         <ul class="list-disc list-inside space-y-1 mt-2 custom-list">
+                            <li><span class="font-medium">免疫細胞による認識:</span> 主にTLR4 (Toll様受容体4) が、CD14やMD-2といった補助分子と共にLPSを認識します。</li>
+                            <li><span class="font-medium">自然免疫応答の活性化:</span> 炎症性サイトカイン (TNF-α, IL-1β, IL-6等) の産生を促し、感染防御反応を開始します。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                <h3>3. LPSの二面性 ― 恩恵と脅威</h3>
+                 <p class="mb-3 text-sm">LPSは、その濃度や状況によって、宿主に異なる影響を与えます。</p>
+                <div class="flex space-x-2 mb-4 border-b border-slate-200">
+                    <button class="lps-dual-tab tab-active px-3 py-1 text-xs rounded-t-md data-[state=active]:bg-sky-100 data-[state=active]:text-sky-700" onclick="showLpsDualContent('lps-beneficial')">有益な効果</button>
+                    <button class="lps-dual-tab px-3 py-1 text-xs rounded-t-md data-[state=active]:bg-sky-100 data-[state=active]:text-sky-700" onclick="showLpsDualContent('lps-harmful')">有害な効果</button>
+                </div>
+                <div id="lps-beneficial" class="lps-dual-content text-sm">
+                    <h4 class="font-semibold text-green-600 mb-2">低用量LPSの有益な可能性：</h4>
+                    <ul class="list-disc list-inside space-y-1 custom-list">
+                        <li><span class="font-medium">免疫調節 (免疫訓練):</span> 免疫細胞を適度に刺激し、その後の感染に対する防御能を高める可能性。</li>
+                        <li><span class="font-medium">神経保護作用:</span> 低用量の経口投与がアルツハイマー病モデルで認知機能低下を抑制した報告も。</li>
+                        <li><span class="font-medium">疾患予防:</span> アレルギー性疾患や生活習慣病の予防に役立つ可能性が研究されています。</li>
+                    </ul>
+                </div>
+                <div id="lps-harmful" class="lps-dual-content hidden text-sm">
+                    <h4 class="font-semibold text-red-600 mb-2">高用量LPSの有害な影響：</h4>
+                     <ul class="list-disc list-inside space-y-1 custom-list">
+                        <li><span class="font-medium">敗血症・敗血症性ショック:</span> 血中への大量放出は制御不能な全身性炎症を引き起こし、生命を脅かす。</li>
+                        <li><span class="font-medium">臓器障害:</span> 過剰な炎症が血管内皮を損傷し、多臓器不全を招く。</li>
+                        <li><span class="font-medium">神経炎症の悪化:</span> 神経変性疾患の進行に関与する可能性。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-md">
+                <h3>4. LPSと関連疾患</h3>
+                <p class="mb-3 text-sm">LPSは、腸内細菌叢のバランス異常（ディスバイオシス）などを介して、様々な慢性炎症性疾患や自己免疫疾患の病態に関与していると考えられています。</p>
+                <div class="flex flex-wrap -mx-2 text-xs">
+                    <button class="lps-disease-tab active-disease-tab m-1 px-3 py-1.5 bg-sky-100 text-sky-700 rounded-full hover:bg-sky-200" onclick="showLpsDisease('ibd')">炎症性腸疾患 (IBD)</button>
+                    <button class="lps-disease-tab m-1 px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full hover:bg-sky-200" onclick="showLpsDisease('neuro')">神経変性疾患</button>
+                    <button class="lps-disease-tab m-1 px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full hover:bg-sky-200" onclick="showLpsDisease('cardio')">心血管疾患</button>
+                    <button class="lps-disease-tab m-1 px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full hover:bg-sky-200" onclick="showLpsDisease('metabolic')">メタボリックシンドローム</button>
+                    <button class="lps-disease-tab m-1 px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full hover:bg-sky-200" onclick="showLpsDisease('ali')">急性肺損傷</button>
+                    <button class="lps-disease-tab m-1 px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full hover:bg-sky-200" onclick="showLpsDisease('ra')">関節リウマチ</button>
+                </div>
+                <div class="mt-4 space-y-2 text-sm">
+                    <div id="lps-ibd" class="lps-disease-content">
+                        <p><span class="font-semibold">炎症性腸疾患 (クローン病, 潰瘍性大腸炎):</span> 腸管透過性の亢進によりLPSが血中に移行しやすく、腸管炎症を悪化させる可能性。腸内細菌叢の異常が関与。</p>
+                    </div>
+                    <div id="lps-neuro" class="lps-disease-content hidden">
+                        <p><span class="font-semibold">神経変性疾患 (アルツハイマー病, パーキンソン病):</span> 腸脳相関を介し、末梢のLPSが脳内炎症（神経炎症）を誘発・悪化させる可能性。タンパク質凝集を促進することも。</p>
+                    </div>
+                    <div id="lps-cardio" class="lps-disease-content hidden">
+                        <p><span class="font-semibold">心血管疾患 (アテローム性動脈硬化, 心不全):</span> 慢性的な血中LPSレベル上昇は血管壁の炎症を促進し、動脈硬化や心血管イベントのリスクを高める。</p>
+                    </div>
+                    <div id="lps-metabolic" class="lps-disease-content hidden">
+                        <p><span class="font-semibold">メタボリックシンドローム:</span> 高脂肪食などによる「メタボリックエンドトキシン血症」が低グレードの全身性炎症を引き起こし、インスリン抵抗性や肥満、2型糖尿病に関与。</p>
+                    </div>
+                     <div id="lps-ali" class="lps-disease-content hidden">
+                        <p><span class="font-semibold">急性肺損傷 (ALI):</span> LPSの気管内投与はALIの動物モデルとして用いられ、肺の炎症や透過性亢進を誘導。</p>
+                    </div>
+                    <div id="lps-ra" class="lps-disease-content hidden">
+                        <p><span class="font-semibold">関節リウマチ (RA):</span> 患者の滑膜組織でLPSレベル上昇が報告され、関節の炎症・破壊に関与する可能性。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3>5. LPSの検出と定量化</h3>
+                    <p class="mb-3 text-sm">LPSの検出・定量には、目的に応じて様々な方法が用いられます。</p>
+                    <ul class="space-y-2 text-xs custom-list">
+                        <li><span class="font-semibold">リムルスアメボサイト溶解物 (LAL) アッセイ:</span> カブトガニ血球抽出物を利用した高感度な方法。医薬品等のエンドトキシン試験に標準的に使用。特異性や干渉物質に注意が必要。</li>
+                        <li><span class="font-semibold">酵素結合免疫吸着検定法 (ELISA):</span> LPS特異的抗体を用いる方法。比較的簡便で多検体処理が可能。感度や特異性は抗体の質に依存。</li>
+                        <li><span class="font-semibold">質量分析法 (LC-MS/MS, MALDI-MS):</span> LPS分子や特異的マーカーを直接検出・定量。構造解析も可能で特異性が高いが、感度や装置コストが課題。</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3>6. LPSを標的とした治療戦略と研究動向</h3>
+                    <p class="mb-3 text-sm">LPSの有害な作用を抑制するための治療戦略が研究されています。</p>
+                     <ul class="space-y-2 text-xs custom-list">
+                        <li><span class="font-semibold">抗LPS抗体:</span> LPSの毒性を中和し炎症を抑える。敗血症治療で研究されるも、一貫した有効性は未確立。</li>
+                        <li><span class="font-semibold">TLR4阻害剤:</span> LPSとTLR4の結合を阻害し炎症シグナルを遮断。敗血症や各種炎症性疾患治療薬として開発中。</li>
+                        <li><span class="font-semibold">LPS中和戦略:</span> 抗菌ペプチド、リポタンパク質、ポリミキシンBなどがLPSに結合し不活化するアプローチ。</li>
+                    </ul>
+                    <p class="mt-3 text-xs">LPS研究は世界的に活発で、構造機能の詳細解明、疾患特異的治療法、低用量LPSの臨床応用、腸内細菌叢との関連、高精度検出法開発などが今後の焦点です。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 text-center py-6 mt-12">
+        <p class="text-sm">&copy; 2024 生命科学インタラクティブ・レポート (c)</p>
+        <p class="text-xs mt-1">本内容は提供された情報源に基づき作成されたものであり、医学的助言を代替するものではありません。</p>
+    </footer>
+
+    <script>
+        const tabs = document.querySelectorAll('#navTabs button');
+        const sections = document.querySelectorAll('.content-section');
+        const solubilityFactorEl = document.getElementById('solubilityFactor');
+
+        function showTab(tabName) {
+            tabs.forEach(tab => {
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.remove('tab-inactive');
+                    tab.classList.add('tab-active');
+                } else {
+                    tab.classList.remove('tab-active');
+                    tab.classList.add('tab-inactive');
+                }
+            });
+            sections.forEach(section => {
+                if (section.id === tabName) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                showTab(tab.dataset.tab);
+            });
+        });
+
+        // Chart for Shikonin Study (Illustrative)
+        const shikoninCtx = document.getElementById('shikoninChart')?.getContext('2d');
+        if (shikoninCtx) {
+            new Chart(shikoninCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['対照群 (プラセボ歯磨き粉)', 'シコニン分散液配合歯磨き粉'],
+                    datasets: [{
+                        label: '口腔内ミュータンス菌数 (相対値)',
+                        data: [100, 45], // Illustrative data: 55% reduction
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(75, 192, 192, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '菌数 (相対値)' }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'シコニン分散液配合歯磨き粉によるミュータンス菌抑制効果（模式図）',
+                            padding: { top: 10, bottom: 10 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // LPS Dual Nature Tabs
+        const lpsDualTabs = document.querySelectorAll('.lps-dual-tab');
+        const lpsDualContents = document.querySelectorAll('.lps-dual-content');
+
+        function showLpsDualContent(contentId) {
+            lpsDualTabs.forEach(tab => {
+                tab.classList.remove('tab-active', 'bg-sky-100', 'text-sky-700');
+                 tab.classList.add('bg-slate-100', 'text-slate-600');
+                if (tab.getAttribute('onclick').includes(contentId)) {
+                    tab.classList.add('tab-active', 'bg-sky-100', 'text-sky-700');
+                    tab.classList.remove('bg-slate-100', 'text-slate-600');
+                }
+            });
+            lpsDualContents.forEach(content => {
+                if (content.id === contentId) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+        // Initialize first LPS dual tab
+        if(lpsDualTabs.length > 0) showLpsDualContent('lps-beneficial');
+
+
+        // LPS Disease Tabs
+        const lpsDiseaseTabs = document.querySelectorAll('.lps-disease-tab');
+        const lpsDiseaseContents = document.querySelectorAll('.lps-disease-content');
+        
+        function showLpsDisease(contentId) {
+            lpsDiseaseTabs.forEach(tab => {
+                tab.classList.remove('active-disease-tab', 'bg-sky-100', 'text-sky-700');
+                tab.classList.add('bg-slate-100', 'text-slate-600');
+                if (tab.getAttribute('onclick').includes(contentId)) {
+                    tab.classList.add('active-disease-tab', 'bg-sky-100', 'text-sky-700');
+                    tab.classList.remove('bg-slate-100', 'text-slate-600');
+                }
+            });
+            lpsDiseaseContents.forEach(content => {
+                if (content.id === `lps-${contentId}`) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+         // Initialize first LPS disease tab
+        if(lpsDiseaseTabs.length > 0) showLpsDisease('ibd');
+
+
+        // Initial tab display
+        showTab('home');
+        if (solubilityFactorEl) {
+            let count = 0;
+            const target = 150;
+            const duration = 1500; // ms
+            const stepTime = Math.abs(Math.floor(duration / target));
+            
+            function updateCounter() {
+                count++;
+                solubilityFactorEl.textContent = count;
+                if (count < target) {
+                    setTimeout(updateCounter, stepTime);
+                } else {
+                     solubilityFactorEl.textContent = target;
+                }
+            }
+            // Only animate if the section is visible, or use IntersectionObserver for better performance
+            // For simplicity, starting animation directly here.
+            // setTimeout(updateCounter, 200); // Small delay
+        }
+
+    </script>
+</body>
+</html>
